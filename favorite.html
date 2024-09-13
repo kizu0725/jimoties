@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - favorete</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css'>
+<link rel='stylesheet' href='https://unpkg.com/@mdi/font@6.x/css/materialdesignicons.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <v-app style="background-color: #e0f0e6;">
+    <!-- 題名バー -->
+    <v-app-bar color="#7b9e7a" dark dense class="custom-app-bar">
+      <v-toolbar-title style="font-size: 20px;">お気に入り</v-toolbar-title>
+    </v-app-bar>
+
+    <!-- メインコンテンツ -->
+    <v-container>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :items-per-page="5"
+        class="elevation-1"
+        :disable-sort="true"
+      >
+        <!-- 商品画像カスタムテンプレート -->
+        <template v-slot:item.img="{ item }">
+          <img :src="item.img" alt="商品画像" width="100" />
+        </template>
+        <!-- 商品名カスタムテンプレート -->
+        <template v-slot:item.calories="{ item }">
+          {{ item.calories }}
+        </template>
+        <!-- 自治体名カスタムテンプレート -->
+        <template v-slot:item.fat="{ item }">
+          {{ item.fat }}
+        </template>
+        <!-- 金額カスタムテンプレート -->
+        <template v-slot:item.carbs="{ item }">
+          {{ item.carbs | currency('¥') }}
+        </template>
+        <!-- 操作ボタンカスタムテンプレート -->
+        <template v-slot:item.actions="{ item }">
+          <div class="action-buttons">
+            <v-btn @click="addToCart(item)" color="gray" small>
+              かごに追加
+            </v-btn>
+            
+            <br>
+            <v-btn @click="removeFromFavorites(item)" color="gray" small>
+              削除
+            </v-btn>
+          </div>
+        </template>
+      </v-data-table>
+    </v-container>
+  </v-app>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
