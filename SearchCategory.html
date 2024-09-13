@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>カテゴリ</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ジモティーズ</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.6.12/dist/vuetify.min.css" rel="stylesheet">
+  <style>
+    .header, .footer {
+      background-color: #f5f5f5;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-family: 'serif';
+      font-size: 24px;
+      font-weight: bold;
+      color: #7b9e7a;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title .mdi-icon {
+      margin-right: 10px;
+      font-size: 40px;
+      color: #7b9e7a;
+    }
+
+    .header-right .v-btn, .navbar .v-btn {
+      margin-left: 10px;
+      color: #7b9e7a;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .search-btn {
+      background-color: #7b9e7a !important;
+      color: white !important;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-weight: bold;
+    }
+
+    .icon-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 4px;
+      color: #7b9e7a;
+      text-transform: none;
+      min-width: 50px;
+      padding: 8px 16px;
+    }
+
+    .admin-login-btn {
+      color: #7b9e7a;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .categories-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px 20px;
+      justify-items: center;
+      margin-top: 10px;
+      width: 80%;
+      max-width: 800px;
+      margin: 20px auto;
+      margin-bottom: 20px;
+    }
+
+    .categories-container .v-btn {
+      width: 150px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      text-transform: none;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .category-prompt {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #7b9e7a;
+      grid-column: 1 / -1;
+    }
+
+    .products-container {
+      position: relative;
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .products-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #7b9e7a;
+    }
+
+    .products-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 150px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .product-card p {
+      margin: 5px 0;
+      color: #7b9e7a;
+    }
+
+    /* リンクのデフォルトスタイルを完全にリセット */
+    a {
+      text-decoration: none !important; /* 下線を消す */
+      color: inherit !important; /* 親のカラーを継承 */
+      border: none !important; /* 全てのリンクのボーダーを消す */
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <div class="header">
+        <div class="header-left">
+          <div class="header-title">
+            <v-icon class="mdi-icon">mdi-home-city-outline</v-icon>
+            ジモティーズ
+          </div>
+        </div>
+        <div class="header-right">
+          <v-btn text color="#7b9e7a" @click="goHome">ホーム</v-btn>
+          <v-btn text color="#7b9e7a" @click="goLogin">ログイン</v-btn>
+          <v-btn text color="#7b9e7a" @click="goLogin">新規登録</v-btn>
+        </div>
+      </div>
+      <v-toolbar flat class="navbar">
+        <v-spacer></v-spacer>
+        <v-btn class="icon-button" flat @click="goMypage">
+          <v-icon>mdi-account</v-icon>
+          <span>マイページ</span>
+        </v-btn>
+        <v-btn class="icon-button" flat @click="goFavorite">
+          <v-icon>mdi-heart</v-icon>
+          <span>お気に入り</span>
+        </v-btn>
+        <v-btn class="icon-button" flat @click="goCart">
+          <v-icon>mdi-cart</v-icon>
+          <span>カート</span>
+        </v-btn>
+      </v-toolbar>
+      <v-main>
+        <v-container>
+          <div class="categories-container">
+            <h3 class="category-prompt">カテゴリを選択してください</h3>
+            <v-btn v-for="category in categories" 
+                   :key="category.name" 
+                   outlined 
+                   color="#7b9e7a" 
+                   class="mx-2" 
+                   @click="fetchProducts(category)">
+              <v-icon left>{{ category.icon }}</v-icon>{{ category.name }}
+            </v-btn>
+          </div>
+
+          <!-- 名産品リスト -->
+          <div class="products-container" v-if="selectedProducts.length">
+            <h3 class="products-title">名産品リスト</h3>
+            <div class="products-grid">
+              <a v-for="product in selectedProducts" 
+                 :key="product.name" 
+                 :href="'ItemDetail.html?name=' + product.name" 
+                 class="product-card">
+                <img :src="product.image" alt="">
+                <p>{{ product.name }}</p>
+                <p>{{ product.description }}</p>
+                <p>産地: {{ product.region }}</p>
+                <p>{{ product.price }}円</p>
+              </a>
+            </div>
+          </div>
+        </v-container>
+      </v-main>
+      <v-footer class="footer">
+        &copy; 2024 ジモティーズ. All rights reserved.
+        <v-btn text class="admin-login-btn" @click="goAdminLogin">管理者はこちらから</v-btn>
+      </v-footer>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.12/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          categories: [
+            { name: '肉', icon: 'mdi-pig' },
+            { name: '魚', icon: 'mdi-fish' },
+            { name: '米・パン', icon: 'mdi-bread-slice' },
+            { name: '果物', icon: 'mdi-fruit-grapes' },
+            { name: '野菜', icon: 'mdi-carrot' },
+            { name: '卵・乳製品', icon: 'mdi-egg' },
+            { name: '酒', icon: 'mdi-glass-wine' },
+            { name: '飲料', icon: 'mdi-coffee' },
+            { name: 'スイーツ', icon: 'mdi-candy' },
+            { name: '麺', icon: 'mdi-noodles' },
+            { name: '調味料', icon: 'mdi-silverware-fork-knife' },
+            { name: '雑貨・日用品', icon: 'mdi-basket' },
+            { name: '美容', icon: 'mdi-lipstick' },
+            { name: 'その他', icon: 'mdi-dots-horizontal' }
+          ],
+          selectedCategory: {},
+          selectedProducts: [],
+          apiUrl: 'https://m3h-minaki-jimoties.azurewebsites.net/api/SearchItemCategory' // APIのURLを設定
+        };
+      },
+      methods: {
+        async fetchProducts(category) {
+          this.selectedCategory = category;
+          try {
+            const response = await fetch(this.apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ Item_category: category.name })
+            });
+
+            const text = await response.text();
+            console.log('API Response:', text); // レスポンス内容をログに出力
+
+            let data;
+            try {
+              data = JSON.parse(text);
+            } catch (jsonError) {
+              console.error('JSONの解析に失敗しました:', jsonError);
+              alert('取得したデータの形式が正しくありません。');
+              return;
+            }
+
+            // ItemTableListプロパティを正しく参照してデータを取得
+            if (data.ItemTableList && Array.isArray(data.ItemTableList)) {
+              this.selectedProducts = data.ItemTableList.map(product => ({
+                name: product.Item_name || '商品名なし',
+                price: product.Item_price || '価格未設定',
+                image: product.Item_image || 'https://via.placeholder.com/150',
+                region: product.Item_prefecture || '産地不明'
+              }));
+            } else {
+              console.error('データ形式が正しくありません。', data);
+              alert('取得したデータの形式が正しくありません。');
+            }
+          } catch (error) {
+            console.error('名産品の取得に失敗しました:', error);
+            alert('名産品の取得に失敗しました。もう一度お試しください。');
+          }
+        },
+        goHome() {
+          window.location.href = 'index.html';
+        },
+        goLogin() {
+          window.location.href = 'UserLogin.html';
+        },
+        goMypage() {
+          window.location.href = 'Mypage.html';
+        },
+        goFavorite() {
+          window.location.href = 'Favorite.html';
+        },
+        goCart() {
+          window.location.href = 'Shoplist.html';
+        },
+        goAdminLogin() {
+          window.location.href = 'EmployeeLogin.html';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
